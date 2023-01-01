@@ -42,12 +42,12 @@ private val ii = increaseIndent
 private val di = decreaseIndent
 
 extension (w : Writer)
-  def indent(indentLevel: Int)(s: String)(using ui : UnitIndent) : Unit = print(ii(indentLevel * ui.toInt)(s))
+  def indent(indentLevel: Int)(s: String)(using ui : UnitIndent) : Unit = write(ii(indentLevel * ui.toInt)(s))
   def writeln(s: String) : Unit =
     w.write(s)
     w.write(LineSep)
   def writeln() : Unit = w.write(LineSep)
-  def indentln(indentLevel: Int)(s: String)(using ui : UnitIndent) : Unit = println(ii(indentLevel * ui.toInt)(s))
+  def indentln(indentLevel: Int)(s: String)(using ui : UnitIndent) : Unit = writeln(ii(indentLevel * ui.toInt)(s))
 
 
 
