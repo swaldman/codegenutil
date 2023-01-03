@@ -3,15 +3,21 @@ package com.mchange.codegenutil
 import java.io.Writer
 import scala.util.matching.Regex.Match
 
-private val IndentIncreasePointRegex ="""(?:^|([\r\n]+))""".r
-private val IndentDecreaseRegex ="""(?:^( *)|([\r\n]+ *))""".r
+private val IndentIncreasePointRegex = """(?:^|([\r\n]+))""".r
+private val IndentDecreaseRegex      = """(?:^( *)|([\r\n]+ *))""".r
+private val PrependEachLineRegex     = """(?:^|(\n)|(\r(?!\n)))""".r
 
 private def nullToBlank(s : String) = if s == null then "" else s
 
 private def notNullOrElse[T]( target : T, replacement : T) =
   if target == null then target else replacement
 
+private val EmptyStringOption = Some("")
+
 val LineSep = Option(System.getProperty("line.separator")).getOrElse("\n")
+
+def nonEmptyStringOption(s : String)         : Option[String] = if (s.isEmpty) None else Option(s)
+def nonEmptyStringOption(o : Option[String]) : Option[String] = if (o == EmptyStringOption) None else o
 
 def increaseIndent( spaces : Int )( block : String ) =
   if (spaces > 0)
@@ -31,6 +37,12 @@ def decreaseIndent( spaces : Int )( block : String ) =
     IndentDecreaseRegex.replaceAllIn(block, m => replace(m))
   else
     block
+
+def prependEachLine( prefix : String )( block : String ) : String =
+  PrependEachLineRegex.replaceAllIn(
+    block,
+    m => (nonEmptyStringOption(m.group(1)).map(_+prefix) orElse nonEmptyStringOption(m.group(2)).map(_+prefix)).getOrElse( prefix )
+  )
 
 def increaseIndentLevel(block : String)(using ui : UnitIndent) = increaseIndent(ui.toInt)(block)
 def decreaseIndentLevel(block : String)(using ui : UnitIndent) = decreaseIndent(ui.toInt)(block)
