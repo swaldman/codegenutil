@@ -16,8 +16,8 @@ private val EmptyStringOption = Some("")
 
 val LineSep = Option(System.getProperty("line.separator")).getOrElse("\n")
 
-def nonEmptyStringOption(s : String)         : Option[String] = if (s.isEmpty) None else Option(s)
-def nonEmptyStringOption(o : Option[String]) : Option[String] = if (o == EmptyStringOption) None else o
+def nonEmptyStringOption(s : String)         : Option[String] = if (s == null || s.isEmpty) None else Option(s)
+def nonEmptyStringOption(o : Option[String]) : Option[String] = if (o == null || o == EmptyStringOption) None else o
 
 def increaseIndent( spaces : Int )( block : String ) =
   if (spaces > 0)
