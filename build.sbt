@@ -7,7 +7,7 @@ ThisBuild / publishTo := {
 }
 
 ThisBuild / organization := "com.mchange"
-ThisBuild / version      := "0.0.1-SNAPSHOT"
+ThisBuild / version      := "0.0.1"
 
 val ScalaVersion = "3.2.1"
 
