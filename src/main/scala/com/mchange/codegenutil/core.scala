@@ -3,7 +3,7 @@ package com.mchange.codegenutil
 import java.io.Writer
 import scala.util.matching.Regex.Match
 
-private val IndentIncreasePointRegex = """(?:^|([\r\n]+))""".r
+private val IndentIncreasePointRegex = """(?:^|([\r\n]+)(?!$))""".r
 private val IndentDecreaseRegex      = """(?:^( *)|([\r\n]+ *))""".r
 private val PrependEachLineRegex     = """(?:^|(\n)|(\r(?!\n)))""".r
 
